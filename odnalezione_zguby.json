@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "item_category": "dokument",
+    "item_description": "Dowód osobisty",
+    "found_date": "2024-12-12",
+    "found_location_name": "Przystanek autobusowy przy ul. Jana Pawła II",
+    "municipality_name": "Miasto Bydgoszcz",
+    "storage_place": "Biuro rzeczy znalezionych",
+    "status": "przechowywany",
+    "claim_deadline": "2025-02-20",
+    "contact_channel": "telefon: 52 123 45 67"
+  },
+  {
+    "id": "2",
+    "item_category": "elektronika",
+    "item_description": "Smartfon Samsung czarny w etui",
+    "found_date": "2024-11-18",
+    "found_location_name": "Galeria handlowa Focus",
+    "municipality_name": "Miasto Bydgoszcz",
+    "storage_place": "Biuro rzeczy znalezionych",
+    "status": "przechowywany",
+    "claim_deadline": "2025-02-18",
+    "contact_channel": "email: rzeczy@bydgoszcz.pl"
+  },
+  {
+    "id": "3",
+    "item_category": "odzież",
+    "item_description": "Kurtka zimowa granatowa",
+    "found_date": "2024-11-10",
+    "found_location_name": "Tramwaj linia 3",
+    "municipality_name": "Miasto Bydgoszcz",
+    "storage_place": "Magazyn UM",
+    "status": "wydany właścicielowi",
+    "claim_deadline": "",
+    "contact_channel": "telefon: 52 987 65 43"
+  },
+  {
+    "id": "4",
+    "item_category": "klucze",
+    "item_description": "Pęk kluczy na czerwonym breloku",
+    "found_date": "2024/10/30",
+    "found_location_name": "Park im. Kazimierza Wielkiego",
+    "municipality_name": "Miasto Bydgoszcz",
+    "storage_place": "Biuro rzeczy znalezionych",
+    "status": "przechowywany",
+    "claim_deadline": "2025-12-12",
+    "contact_channel": "www: https://bydgoszcz.pl/rzeczy"
+  },
+  {
+    "id": "5",
+    "item_category": "odzież",
+    "item_description": "Plecak sportowy niebieski",
+    "found_date": "2024-11-05",
+    "found_location_name": "Dworzec PKP Bydgoszcz Główna",
+    "municipality_name": "Miasto Bydgoszcz",
+    "storage_place": "Magazyn UM",
+    "status": "zlikwidowany",
+    "claim_deadline": "2025-01-05",
+    "contact_channel": "telefon: 52 111 22 33"
+  }
+]

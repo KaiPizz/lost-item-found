@@ -8,7 +8,7 @@
 
 ## 🎯 Problem
 
-Polish municipalities maintain "lost & found" registers (pol. *biura rzeczy znalezionych*) in diverse formats — Excel spreadsheets, exports from internal systems, or hand-typed CSVs. The reality is chaotic:
+Polish municipalities maintain "lost & found" registers (pol. _biura rzeczy znalezionych_) in diverse formats — Excel spreadsheets, exports from internal systems, or hand-typed CSVs. The reality is chaotic:
 
 - **Column names differ** — one office uses `data_znalezienia`, another `kiedy_znaleziono`
 - **Date formats vary** — `2024-01-15`, `15.01.2024`, `15/01/24`
@@ -24,6 +24,7 @@ When these files are uploaded to **dane.gov.pl** (Poland's open data portal), ma
 **Odnalezione Zguby** provides a guided 5-step wizard designed for non-technical municipal clerks. No coding, no manual CSV surgery — just drag, map, fix, preview, and export.
 
 The tool:
+
 1. **Accepts arbitrary CSV exports** — whatever format your office uses
 2. **Maps columns to a canonical schema** — smart auto-detection + manual override
 3. **Validates every record** — required fields, date formats, enum values
@@ -68,11 +69,11 @@ lost-item-found/
     └── lost_items_schema.json  # Canonical schema for lost items
 ```
 
-| Layer | Tech Stack | Purpose |
-|-------|------------|---------|
+| Layer        | Tech Stack                                 | Purpose                              |
+| ------------ | ------------------------------------------ | ------------------------------------ |
 | **Frontend** | React 18 + TypeScript + Vite + TailwindCSS | 5-step wizard UI, validation, export |
-| **Backend** | Node.js + Express + TypeScript | Serves schema, parses uploaded CSVs |
-| **Spec** | JSON Schema | Defines canonical data structure |
+| **Backend**  | Node.js + Express + TypeScript             | Serves schema, parses uploaded CSVs  |
+| **Spec**     | JSON Schema                                | Defines canonical data structure     |
 
 ---
 
@@ -97,13 +98,13 @@ lost-item-found/
 
 ### Step-by-Step Breakdown
 
-| Step | What Happens |
-|------|--------------|
-| **1. Upload** | User uploads CSV → backend parses → frontend receives `headers`, `sampleRows`, `totalRows` |
-| **2. Mapping** | Frontend fetches schema → user maps CSV headers to canonical fields → required fields enforced |
+| Step              | What Happens                                                                                                                   |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **1. Upload**     | User uploads CSV → backend parses → frontend receives `headers`, `sampleRows`, `totalRows`                                     |
+| **2. Mapping**    | Frontend fetches schema → user maps CSV headers to canonical fields → required fields enforced                                 |
 | **3. Validation** | Rows transformed to `StandardRecord` → validated: required fields, date formats, enum values → errors shown inline with fix UI |
-| **4. Preview** | Clean `StandardRecord[]` displayed in final format after all fixes |
-| **5. Export** | Generate CSV or JSON using canonical schema field order → download |
+| **4. Preview**    | Clean `StandardRecord[]` displayed in final format after all fixes                                                             |
+| **5. Export**     | Generate CSV or JSON using canonical schema field order → download                                                             |
 
 ---
 
@@ -111,20 +112,21 @@ lost-item-found/
 
 The schema (`/spec/lost_items_schema.json`) defines 10 fields for lost items:
 
-| Field | Label (PL) | Type | Required |
-|-------|-----------|------|----------|
-| `id` | ID rekordu | string | ✅ |
-| `item_category` | Kategoria przedmiotu | enum | ✅ |
-| `item_description` | Opis przedmiotu | string | ✅ |
-| `found_date` | Data znalezienia | date | ✅ |
-| `found_location_name` | Miejsce znalezienia | string | ✅ |
-| `municipality_name` | Nazwa jednostki | string | ✅ |
-| `storage_place` | Miejsce przechowywania | string | ❌ |
-| `status` | Status przedmiotu | enum | ✅ |
-| `claim_deadline` | Termin odbioru | date | ❌ |
-| `contact_channel` | Kanał kontaktu | string | ❌ |
+| Field                 | Label (PL)             | Type   | Required |
+| --------------------- | ---------------------- | ------ | -------- |
+| `id`                  | ID rekordu             | string | ✅       |
+| `item_category`       | Kategoria przedmiotu   | enum   | ✅       |
+| `item_description`    | Opis przedmiotu        | string | ✅       |
+| `found_date`          | Data znalezienia       | date   | ✅       |
+| `found_location_name` | Miejsce znalezienia    | string | ✅       |
+| `municipality_name`   | Nazwa jednostki        | string | ✅       |
+| `storage_place`       | Miejsce przechowywania | string | ❌       |
+| `status`              | Status przedmiotu      | enum   | ✅       |
+| `claim_deadline`      | Termin odbioru         | date   | ❌       |
+| `contact_channel`     | Kanał kontaktu         | string | ❌       |
 
 **Enum values:**
+
 - `item_category`: `dokument`, `elektronika`, `odzież`, `klucze`, `inne`
 - `status`: `przechowywany`, `wydany właścicielowi`, `zlikwidowany`
 
@@ -173,11 +175,11 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 The repository includes sample CSV files for testing:
 
-| File | Description |
-|------|-------------|
-| `lost_items_valid.csv` | Perfect format — auto-maps cleanly |
+| File                    | Description                                            |
+| ----------------------- | ------------------------------------------------------ |
+| `lost_items_valid.csv`  | Perfect format — auto-maps cleanly                     |
 | `lost_items_broken.csv` | Contains validation errors — demonstrates fix workflow |
-| `odnalezione_zguby.csv` | Legacy format — requires manual mapping |
+| `odnalezione_zguby.csv` | Legacy format — requires manual mapping                |
 
 ---
 
@@ -190,6 +192,44 @@ Built with ❤️ at **HackNation 2025**, Bydgoszcz
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+## 🔗 Linki do zgłoszenia HackNation
+
+Poniżej znajdują się linki do uzupełnienia w formularzu zgłoszeniowym projektu na HackNation.
+
+### 1. Demo dla jury (prywatne lub półprywatne)
+
+Link do działającej wersji kreatora, dostępnej wyłącznie dla jury konkursowego.
+
+**Demo (tylko dla jury):** `https://your-demo-url-here`
+
+> ⚠️ Zastąp powyższy placeholder rzeczywistym URL wdrożonego frontendu (np. Vercel, Netlify, Railway).
+
+### 2. Repozytorium kodu (dostępne tylko dla jury)
+
+Link do repozytorium z pełnym kodem źródłowym oraz instrukcjami instalacji i uruchomienia projektu.
+
+**Repozytorium (kod + README):** `https://github.com/<your-username>/<your-repo>`
+
+> ⚠️ Zastąp placeholder rzeczywistym adresem repozytorium GitHub.
+
+### 3. Publiczny link do projektu (widoczny dla społeczności)
+
+Link widoczny publicznie — może to być to samo demo co dla jury lub publiczne repozytorium GitHub.
+
+**Publiczna strona projektu:** `https://your-public-url-or-repo-here`
+
+> ⚠️ Wstaw URL do publicznego demo lub repozytorium.
+
+### 4. Link do wideo (YouTube lub Vimeo)
+
+Krótkie nagranie (60–90 sekund) prezentujące działanie aplikacji i jej kluczowe funkcje.
+
+**Film demo (YouTube/Vimeo):** `https://your-video-url-here`
+
+> ⚠️ Wgraj wideo na YouTube lub Vimeo i wklej link tutaj.
 
 ---
 
