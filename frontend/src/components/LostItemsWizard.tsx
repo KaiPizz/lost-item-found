@@ -118,7 +118,7 @@ export function LostItemsWizard() {
 
   // Load schema on mount
   useEffect(() => {
-    fetch("http://localhost:3000/api/schema")
+    fetch("https://lost-item-found-backend.onrender.com/api/schema")
       .then((res) => res.json())
       .then((data: CanonicalField[]) => {
         setSchema(data);

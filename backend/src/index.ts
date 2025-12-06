@@ -14,7 +14,10 @@ const upload = multer({ storage: multer.memoryStorage() });
 // Enable CORS for frontend
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://lost-item-found-frontend.vercel.app"
+    ],
     methods: ["GET", "POST"],
   })
 );
