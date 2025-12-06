@@ -1,0 +1,13 @@
+[
+    { "name": "id", "label": "ID rekordu", "required": true, "type": "string" },
+    { "name": "item_category", "label": "Kategoria przedmiotu", "required": true, "type": "enum", "examples": ["dokument", "elektronika", "odzież", "klucze", "inne"] },
+    { "name": "item_description", "label": "Opis przedmiotu", "required": true, "type": "string" },
+    { "name": "found_date", "label": "Data znalezienia", "required": true, "type": "date" },
+    { "name": "found_location_name", "label": "Miejsce znalezienia (opis)", "required": true, "type": "string" },
+    { "name": "municipality_name", "label": "Nazwa jednostki (powiat/gmina)", "required": true, "type": "string" },
+    { "name": "storage_place", "label": "Miejsce przechowywania", "required": false, "type": "string" },
+    { "name": "status", "label": "Status przedmiotu", "required": true, "type": "enum", "examples": ["przechowywany", "wydany właścicielowi", "zlikwidowany"] },
+    { "name": "claim_deadline", "label": "Termin odbioru / przechowywania", "required": false, "type": "date" },
+    { "name": "contact_channel", "label": "Kanał kontaktu (telefon/e-mail/WWW)", "required": false, "type": "string" }
+  ]
+  
