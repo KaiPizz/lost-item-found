@@ -229,7 +229,8 @@ export function Step1DataSource({ onComplete, onDataParsed }: Step1Props) {
           {/* Preview table */}
           <div>
             <h3 className="font-medium text-slate-700 mb-2">
-              Podgląd danych (pierwsze {parsedData.sampleRows.length} wierszy):
+              Podgląd danych (pierwsze {Math.min(5, parsedData.rows.length)} z{" "}
+              {parsedData.totalRows} wierszy):
             </h3>
             <div className="border border-slate-200 rounded-lg overflow-hidden">
               <div className="overflow-x-auto">
@@ -247,7 +248,7 @@ export function Step1DataSource({ onComplete, onDataParsed }: Step1Props) {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
-                    {parsedData.sampleRows.map((row, rowIndex) => (
+                    {parsedData.rows.slice(0, 5).map((row, rowIndex) => (
                       <tr key={rowIndex} className="hover:bg-slate-50">
                         {parsedData.headers.map((header, colIndex) => (
                           <td

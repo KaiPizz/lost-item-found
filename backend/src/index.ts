@@ -93,12 +93,11 @@ app.post("/api/parse-csv", upload.single("file"), (req, res) => {
       return obj;
     });
 
-    // Return sample (first 5 rows) and total count
-    const sampleRows = allRows.slice(0, 5);
-
+    // Return all rows - frontend will show preview of first 5 in Step 1
+    // but process all rows for validation and export
     res.json({
       headers,
-      sampleRows,
+      rows: allRows,
       totalRows: allRows.length,
     });
   } catch (error) {

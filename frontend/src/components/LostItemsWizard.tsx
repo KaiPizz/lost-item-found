@@ -99,7 +99,7 @@ export function LostItemsWizard() {
   const [completedSteps, setCompletedSteps] = useState<Record<number, boolean>>(
     {}
   );
-  const [wizardData, setWizardData] = useState<WizardData>({
+  const [_wizardData, setWizardData] = useState<WizardData>({
     csvData: null,
     fileName: null,
   });
@@ -107,9 +107,7 @@ export function LostItemsWizard() {
   // New state for schema and mapping
   const [schema, setSchema] = useState<CanonicalField[]>([]);
   const [csvHeaders, setCsvHeaders] = useState<string[]>([]);
-  const [sampleRows, setSampleRows] = useState<Array<Record<string, string>>>(
-    []
-  );
+  const [allRows, setAllRows] = useState<Array<Record<string, string>>>([]);
   const [mapping, setMapping] = useState<Mapping>({});
 
   // Validation state
@@ -141,9 +139,9 @@ export function LostItemsWizard() {
       fileName,
     }));
 
-    // Store headers and sample rows
+    // Store headers and all rows
     setCsvHeaders(data.headers);
-    setSampleRows(data.sampleRows);
+    setAllRows(data.rows);
 
     // Try to load saved mapping profile first
     const savedProfile = loadMappingProfile();
@@ -208,19 +206,19 @@ export function LostItemsWizard() {
     }
   }, [currentStep, completedSteps, mapping, csvHeaders]);
 
-  // Transform and validate when entering Step 3 (or when mapping/sampleRows change)
+  // Transform and validate when entering Step 3 (or when mapping/allRows change)
   useEffect(() => {
     if (
       currentStep === 3 &&
-      sampleRows.length > 0 &&
+      allRows.length > 0 &&
       schema.length > 0 &&
       Object.keys(mapping).length > 0
     ) {
-      const result = transformAndValidate(sampleRows, mapping, schema);
+      const result = transformAndValidate(allRows, mapping, schema);
       setStandardRecords(result.records);
       setValidationErrors(result.errors);
     }
-  }, [currentStep, sampleRows, mapping, schema]);
+  }, [currentStep, allRows, mapping, schema]);
 
   // Handle error fixes - only update if value actually changed
   const handleFixError = (
@@ -229,8 +227,8 @@ export function LostItemsWizard() {
     newValue: string
   ) => {
     // Get the old value from the record
-    const oldValue =
-      (standardRecords[rowIndex] as Record<string, string>)?.[field] || "";
+    const record = standardRecords[rowIndex];
+    const oldValue = record ? (record as unknown as Record<string, string>)[field] || "" : "";
 
     // Check if value actually changed - if not, do nothing
     if (!isValueChanged(oldValue, newValue)) {
@@ -242,18 +240,19 @@ export function LostItemsWizard() {
 
     // Update the source CSV row first (so fixes persist)
     const csvColumn = mapping[field];
-    if (csvColumn && sampleRows[rowIndex]) {
-      const updatedSampleRows = [...sampleRows];
-      updatedSampleRows[rowIndex] = {
-        ...updatedSampleRows[rowIndex],
+    if (csvColumn && allRows[rowIndex]) {
+      const updatedAllRows = [...allRows];
+      updatedAllRows[rowIndex] = {
+        ...updatedAllRows[rowIndex],
         [csvColumn]: newValue,
       };
-      setSampleRows(updatedSampleRows);
+      setAllRows(updatedAllRows);
     }
 
     // Update the StandardRecord directly
     const updatedRecords = [...standardRecords];
-    (updatedRecords[rowIndex] as Record<string, string>)[field] = newValue;
+    const recordToUpdate = updatedRecords[rowIndex] as unknown as Record<string, string>;
+    recordToUpdate[field] = newValue;
 
     // Re-validate the updated records
     const newErrors = validateRecords(updatedRecords, schema);
