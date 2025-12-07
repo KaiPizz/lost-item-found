@@ -80,10 +80,12 @@ export function Step3Validation({
           </div>
           <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-emerald-500 transition-all duration-300"
+              className="h-full bg-emerald-500 rounded-full transition-all duration-300"
               style={{
                 width:
-                  remainingErrors === 0
+                  totalRecords === 0
+                    ? "0%"
+                    : remainingErrors === 0
                     ? "100%"
                     : `${Math.max(
                         5,

@@ -8,11 +8,7 @@ interface Step5Props {
   schema: CanonicalField[];
 }
 
-export function Step5Export({
-  onComplete,
-  records,
-  schema,
-}: Step5Props) {
+export function Step5Export({ onComplete, records, schema }: Step5Props) {
   const [exportedFormat, setExportedFormat] = useState<"csv" | "json" | null>(
     null
   );

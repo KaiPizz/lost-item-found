@@ -175,10 +175,10 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 Sample CSV files are available in the app (Step 1):
 
-| File | Description |
-|------|-------------|
-| `Szablon CSV` | Official template — auto-maps perfectly |
-| `Błędny CSV` | Contains validation errors — for testing fixes |
+| File          | Description                                    |
+| ------------- | ---------------------------------------------- |
+| `Szablon CSV` | Official template — auto-maps perfectly        |
+| `Błędny CSV`  | Contains validation errors — for testing fixes |
 
 ---
 
