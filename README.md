@@ -199,7 +199,7 @@ MIT License — see [LICENSE](LICENSE) for details.
 | Co        | Link                                         |
 | --------- | -------------------------------------------- |
 | **Demo**  | https://lost-item-found-frontend.vercel.app/ |
-| **Wideo** | _(do uzupełnienia)_                          |
+| **Wideo** | https://www.youtube.com/watch?v=P3K37hE4oIY  |
 
 ---
 
