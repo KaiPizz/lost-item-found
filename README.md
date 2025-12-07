@@ -188,12 +188,6 @@ Built with ❤️ at **HackNation 2025**, Bydgoszcz
 
 ---
 
-## 📄 License
-
-MIT License — see [LICENSE](LICENSE) for details.
-
----
-
 ## Linki HackNation
 
 | Co        | Link                                         |
