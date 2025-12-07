@@ -8,7 +8,11 @@ interface Step5Props {
   schema: CanonicalField[];
 }
 
-export function Step5Export({ onComplete, records, schema }: Step5Props) {
+export function Step5Export({
+  onComplete,
+  records,
+  schema,
+}: Step5Props) {
   const [exportedFormat, setExportedFormat] = useState<"csv" | "json" | null>(
     null
   );
@@ -26,19 +30,23 @@ export function Step5Export({ onComplete, records, schema }: Step5Props) {
 
   const handleExportJson = () => {
     const json = buildJson(records);
-    downloadFile(json, "odnalezione_zguby.json", "application/json;charset=utf-8");
+    downloadFile(
+      json,
+      "odnalezione_zguby.json",
+      "application/json;charset=utf-8"
+    );
     setExportedFormat("json");
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-slate-800 mb-2">
+        <h2 className="text-2xl font-semibold text-slate-800 mb-2">
           Eksport danych
         </h2>
         <p className="text-slate-600">
-          Twoje dane zostały przetworzone i zweryfikowane. Możesz teraz pobrać
-          pliki w formatach gotowych do publikacji w portalu dane.gov.pl.
+          Pobierz przetworzone dane w formacie zgodnym z portalem dane.gov.pl.
+          Wybierz format najlepiej odpowiadający Twoim potrzebom.
         </p>
       </div>
 
@@ -46,7 +54,9 @@ export function Step5Export({ onComplete, records, schema }: Step5Props) {
       <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div>
-            <div className="font-medium text-slate-800">Podsumowanie danych</div>
+            <div className="font-medium text-slate-800">
+              Podsumowanie danych
+            </div>
             <div className="text-sm text-slate-600">
               Liczba rekordów: <strong>{records.length}</strong>
             </div>
@@ -93,8 +103,8 @@ export function Step5Export({ onComplete, records, schema }: Step5Props) {
             </div>
           </div>
           <p className="text-sm text-slate-600">
-            Standardowy format CSV, łatwy do otwarcia w Excelu i innych arkuszach
-            kalkulacyjnych.
+            Standardowy format CSV, łatwy do otwarcia w Excelu i innych
+            arkuszach kalkulacyjnych.
           </p>
           {exportedFormat === "csv" && (
             <div className="mt-3 flex items-center gap-1 text-emerald-600 text-sm">

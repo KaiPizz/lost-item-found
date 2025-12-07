@@ -5,7 +5,6 @@ import { Step3Validation } from "./steps/Step3Validation";
 import { Step4Preview } from "./steps/Step4Preview";
 import { Step5Export } from "./steps/Step5Export";
 import type {
-  WizardData,
   ParsedCSVData,
   CanonicalField,
   Mapping,
@@ -27,9 +26,9 @@ import {
 const STEPS = [
   { id: 1, title: "Źródło danych" },
   { id: 2, title: "Mapowanie kolumn" },
-  { id: 3, title: "Walidacja" },
-  { id: 4, title: "Podgląd" },
-  { id: 5, title: "Eksport" },
+  { id: 3, title: "Walidacja i poprawki" },
+  { id: 4, title: "Podgląd i podsumowanie" },
+  { id: 5, title: "Eksport danych" },
 ];
 
 // Build default mapping by trying to match CSV headers to schema fields
@@ -99,13 +98,11 @@ export function LostItemsWizard() {
   const [completedSteps, setCompletedSteps] = useState<Record<number, boolean>>(
     {}
   );
-  const [_wizardData, setWizardData] = useState<WizardData>({
-    csvData: null,
-    fileName: null,
-  });
 
-  // New state for schema and mapping
+  // State for schema and mapping
   const [schema, setSchema] = useState<CanonicalField[]>([]);
+  const [schemaLoading, setSchemaLoading] = useState(true);
+  const [schemaError, setSchemaError] = useState<string | null>(null);
   const [csvHeaders, setCsvHeaders] = useState<string[]>([]);
   const [allRows, setAllRows] = useState<Array<Record<string, string>>>([]);
   const [mapping, setMapping] = useState<Mapping>({});
@@ -118,13 +115,20 @@ export function LostItemsWizard() {
 
   // Load schema on mount
   useEffect(() => {
+    setSchemaLoading(true);
+    setSchemaError(null);
     fetch("https://lost-item-found-backend.onrender.com/api/schema")
       .then((res) => res.json())
       .then((data: CanonicalField[]) => {
         setSchema(data);
+        setSchemaLoading(false);
       })
       .catch((err) => {
         console.error("Failed to load schema:", err);
+        setSchemaError(
+          "Nie udało się załadować schematu danych. Sprawdź połączenie z serwerem."
+        );
+        setSchemaLoading(false);
       });
   }, []);
 
@@ -132,13 +136,7 @@ export function LostItemsWizard() {
     setCompletedSteps((prev) => ({ ...prev, [step]: completed }));
   };
 
-  const handleDataParsed = (data: ParsedCSVData, fileName: string) => {
-    setWizardData((prev) => ({
-      ...prev,
-      csvData: data,
-      fileName,
-    }));
-
+  const handleDataParsed = (data: ParsedCSVData, _fileName: string) => {
     // Store headers and all rows
     setCsvHeaders(data.headers);
     setAllRows(data.rows);
@@ -228,7 +226,9 @@ export function LostItemsWizard() {
   ) => {
     // Get the old value from the record
     const record = standardRecords[rowIndex];
-    const oldValue = record ? (record as unknown as Record<string, string>)[field] || "" : "";
+    const oldValue = record
+      ? (record as unknown as Record<string, string>)[field] || ""
+      : "";
 
     // Check if value actually changed - if not, do nothing
     if (!isValueChanged(oldValue, newValue)) {
@@ -251,7 +251,10 @@ export function LostItemsWizard() {
 
     // Update the StandardRecord directly
     const updatedRecords = [...standardRecords];
-    const recordToUpdate = updatedRecords[rowIndex] as unknown as Record<string, string>;
+    const recordToUpdate = updatedRecords[rowIndex] as unknown as Record<
+      string,
+      string
+    >;
     recordToUpdate[field] = newValue;
 
     // Re-validate the updated records
@@ -285,6 +288,28 @@ export function LostItemsWizard() {
     }
   };
 
+  // Restart wizard - clear all data except schema
+  const handleRestartWizard = () => {
+    // Reset to step 1
+    setCurrentStep(1);
+
+    // Clear all step completion flags
+    setCompletedSteps({});
+
+    // Clear CSV/file data
+    setCsvHeaders([]);
+    setAllRows([]);
+
+    // Clear mapping
+    setMapping({});
+
+    // Clear validation data
+    setStandardRecords([]);
+    setValidationErrors([]);
+
+    // Note: schema, schemaLoading, schemaError are NOT reset - schema stays in memory
+  };
+
   const renderStep = () => {
     switch (currentStep) {
       case 1:
@@ -299,6 +324,8 @@ export function LostItemsWizard() {
           <Step2ColumnMapping
             onComplete={(c) => handleStepComplete(2, c)}
             schema={schema}
+            schemaLoading={schemaLoading}
+            schemaError={schemaError}
             csvHeaders={csvHeaders}
             mapping={mapping}
             onChangeMapping={handleMappingChange}
@@ -364,10 +391,12 @@ export function LostItemsWizard() {
 
           {/* Progress stepper */}
           <div className="px-6 py-4 border-b border-slate-100 bg-slate-50">
-            <div className="flex items-center justify-between">
+            <div className="flex items-start">
               {STEPS.map((step, index) => (
-                <div key={step.id} className="flex items-center">
-                  <div className="flex flex-col items-center">
+                <div key={step.id} className="flex-1 flex items-start">
+                  {/* Step container */}
+                  <div className="flex-1 flex flex-col items-center">
+                    {/* Circle */}
                     <div
                       className={`w-10 h-10 rounded-full flex items-center justify-center font-medium text-sm transition-colors ${
                         step.id < currentStep
@@ -395,8 +424,9 @@ export function LostItemsWizard() {
                         step.id
                       )}
                     </div>
+                    {/* Label */}
                     <span
-                      className={`text-xs mt-2 ${
+                      className={`text-xs mt-2 text-center leading-tight ${
                         step.id <= currentStep
                           ? "text-slate-700 font-medium"
                           : "text-slate-400"
@@ -405,14 +435,18 @@ export function LostItemsWizard() {
                       {step.title}
                     </span>
                   </div>
+                  {/* Connector bar */}
                   {index < STEPS.length - 1 && (
-                    <div
-                      className={`w-16 h-1 mx-2 rounded ${
-                        step.id < currentStep
-                          ? "bg-emerald-500"
-                          : "bg-slate-200"
-                      }`}
-                    />
+                    <div className="flex items-center h-10 -mx-1">
+                      <div
+                        className={`w-full h-1 rounded ${
+                          step.id < currentStep
+                            ? "bg-emerald-500"
+                            : "bg-slate-200"
+                        }`}
+                        style={{ minWidth: "2rem" }}
+                      />
+                    </div>
                   )}
                 </div>
               ))}
@@ -497,9 +531,25 @@ export function LostItemsWizard() {
                   </svg>
                 </button>
               ) : (
-                <div className="text-emerald-600 font-medium">
-                  ✓ Kreator ukończony
-                </div>
+                <button
+                  onClick={handleRestartWizard}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-lg font-medium transition-colors bg-emerald-500 hover:bg-emerald-600 text-white"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                  Rozpocznij nowy plik
+                </button>
               )}
             </div>
           </div>

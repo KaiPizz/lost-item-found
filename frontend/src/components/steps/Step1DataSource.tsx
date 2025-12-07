@@ -70,12 +70,12 @@ export function Step1DataSource({ onComplete, onDataParsed }: Step1Props) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-slate-800 mb-2">
-          Źródło danych i wgrywanie pliku
+        <h2 className="text-2xl font-semibold text-slate-800 mb-2">
+          Źródło danych
         </h2>
         <p className="text-slate-600">
-          Wybierz plik CSV z danymi o znalezionych przedmiotach. Pierwszy wiersz
-          powinien zawierać nazwy kolumn.
+          Wgraj plik CSV z danymi o znalezionych przedmiotach z Twojego biura.
+          Pierwszy wiersz powinien zawierać nazwy kolumn.
         </p>
       </div>
 
@@ -358,6 +358,53 @@ export function Step1DataSource({ onComplete, onDataParsed }: Step1Props) {
             standardem. Jego użycie pozwala całkowicie pominąć ręczne mapowanie
             kolumn.
           </p>
+        </div>
+      )}
+
+      {/* Bad example CSV section - for judges testing */}
+      {!parsedData && !isLoading && (
+        <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+          <h3 className="font-medium text-slate-700 mb-2 flex items-center gap-2">
+            <svg
+              className="h-5 w-5 text-slate-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+            Przykładowy błędny CSV (tylko dla sędziów)
+          </h3>
+          <p className="text-sm text-slate-600 mb-3">
+            Ten plik zawiera kilka rekordów z drobnymi błędami: niepoprawny
+            status, brakujący opis. Pozwala szybko przetestować walidację i
+            poprawki.
+          </p>
+          <a
+            href="/bad-example.csv"
+            download="bad-example.csv"
+            className="inline-flex items-center gap-2 bg-slate-500 text-white px-4 py-2 rounded-md hover:bg-slate-600 transition-colors font-medium text-sm"
+          >
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            Pobierz błędny CSV (wersja testowa)
+          </a>
         </div>
       )}
     </div>

@@ -60,12 +60,12 @@ export function Step3Validation({
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-slate-800 mb-2">
+        <h2 className="text-2xl font-semibold text-slate-800 mb-2">
           Walidacja i poprawki
         </h2>
         <p className="text-slate-600">
-          System sprawdził dane pod kątem błędów i niezgodności ze schematem.
-          Poniżej znajdziesz listę problemów do poprawienia.
+          Twoje dane zostały sprawdzone pod kątem zgodności ze standardem.
+          Popraw ewentualne błędy, aby móc opublikować dane.
         </p>
       </div>
 
@@ -107,22 +107,30 @@ export function Step3Validation({
 
       {/* No errors - step can be completed */}
       {errors.length === 0 ? (
-        <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-lg p-4">
-          <svg
-            className="h-6 w-6 text-emerald-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <div className="text-emerald-800">
-            <strong>Nie znaleziono błędów</strong> – możesz przejść dalej.
+        <div className="flex items-start gap-4 bg-emerald-50 border border-emerald-200 rounded-lg p-5">
+          <div className="flex-shrink-0 w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center">
+            <svg
+              className="h-6 w-6 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </div>
+          <div>
+            <div className="text-lg font-semibold text-emerald-800 mb-1">
+              Brak błędów – dane są gotowe do publikacji
+            </div>
+            <p className="text-sm text-emerald-700">
+              Wszystkie rekordy zostały zweryfikowane i są zgodne ze standardem.
+              Możesz przejść do podglądu i eksportu danych.
+            </p>
           </div>
         </div>
       ) : (

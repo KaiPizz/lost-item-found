@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 Problem
+## Problem
 
 Polish municipalities maintain "lost & found" registers (pol. _biura rzeczy znalezionych_) in diverse formats — Excel spreadsheets, exports from internal systems, or hand-typed CSVs. The reality is chaotic:
 
@@ -19,7 +19,7 @@ When these files are uploaded to **dane.gov.pl** (Poland's open data portal), ma
 
 ---
 
-## ✅ Solution
+## Solution
 
 **Odnalezione Zguby** provides a guided 5-step wizard designed for non-technical municipal clerks. No coding, no manual CSV surgery — just drag, map, fix, preview, and export.
 
@@ -33,7 +33,7 @@ The tool:
 
 ---
 
-## ⭐ Key Features
+## Key Features
 
 - **Schema-driven column mapping** — canonical "lost item" schema in `/spec/lost_items_schema.json`
 - **Auto-mapping for "ideal" CSVs** — if your CSV uses standard column names, mapping is automatic
@@ -50,7 +50,7 @@ The tool:
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```text
 lost-item-found/
@@ -77,7 +77,7 @@ lost-item-found/
 
 ---
 
-## 🔄 Data Flow (End-to-End)
+## Data Flow (End-to-End)
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -108,7 +108,7 @@ lost-item-found/
 
 ---
 
-## 📋 Canonical Schema
+## Canonical Schema
 
 The schema (`/spec/lost_items_schema.json`) defines 10 fields for lost items:
 
@@ -132,7 +132,7 @@ The schema (`/spec/lost_items_schema.json`) defines 10 fields for lost items:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -171,19 +171,18 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-## 🧪 Test Data
+## Test Data
 
-The repository includes sample CSV files for testing:
+Sample CSV files are available in the app (Step 1):
 
-| File                    | Description                                            |
-| ----------------------- | ------------------------------------------------------ |
-| `lost_items_valid.csv`  | Perfect format — auto-maps cleanly                     |
-| `lost_items_broken.csv` | Contains validation errors — demonstrates fix workflow |
-| `odnalezione_zguby.csv` | Legacy format — requires manual mapping                |
+| File | Description |
+|------|-------------|
+| `Szablon CSV` | Official template — auto-maps perfectly |
+| `Błędny CSV` | Contains validation errors — for testing fixes |
 
 ---
 
-## 👥 Team
+## Team
 
 Built with ❤️ at **HackNation 2025**, Bydgoszcz
 
@@ -195,41 +194,12 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
-## 🔗 Linki do zgłoszenia HackNation
+## Linki HackNation
 
-Poniżej znajdują się linki do uzupełnienia w formularzu zgłoszeniowym projektu na HackNation.
-
-### 1. Demo dla jury (prywatne lub półprywatne)
-
-Link do działającej wersji kreatora, dostępnej wyłącznie dla jury konkursowego.
-
-**Demo (tylko dla jury):** `https://your-demo-url-here`
-
-> ⚠️ Zastąp powyższy placeholder rzeczywistym URL wdrożonego frontendu (np. Vercel, Netlify, Railway).
-
-### 2. Repozytorium kodu (dostępne tylko dla jury)
-
-Link do repozytorium z pełnym kodem źródłowym oraz instrukcjami instalacji i uruchomienia projektu.
-
-**Repozytorium (kod + README):** `https://github.com/<your-username>/<your-repo>`
-
-> ⚠️ Zastąp placeholder rzeczywistym adresem repozytorium GitHub.
-
-### 3. Publiczny link do projektu (widoczny dla społeczności)
-
-Link widoczny publicznie — może to być to samo demo co dla jury lub publiczne repozytorium GitHub.
-
-**Publiczna strona projektu:** `https://your-public-url-or-repo-here`
-
-> ⚠️ Wstaw URL do publicznego demo lub repozytorium.
-
-### 4. Link do wideo (YouTube lub Vimeo)
-
-Krótkie nagranie (60–90 sekund) prezentujące działanie aplikacji i jej kluczowe funkcje.
-
-**Film demo (YouTube/Vimeo):** `https://your-video-url-here`
-
-> ⚠️ Wgraj wideo na YouTube lub Vimeo i wklej link tutaj.
+| Co        | Link                                         |
+| --------- | -------------------------------------------- |
+| **Demo**  | https://lost-item-found-frontend.vercel.app/ |
+| **Wideo** | _(do uzupełnienia)_                          |
 
 ---
 

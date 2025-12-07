@@ -39,17 +39,39 @@ export function Step4Preview({ onComplete, records, schema }: Step4Props) {
   // Get preview rows (first 5)
   const previewRows = records.slice(0, 5);
 
-  // If no records yet, show placeholder
+  // If no records yet, show friendly empty state
   if (records.length === 0) {
     return (
       <div className="space-y-6">
         <div>
-          <h2 className="text-xl font-semibold text-slate-800 mb-2">
+          <h2 className="text-2xl font-semibold text-slate-800 mb-2">
             Podgląd i podsumowanie
           </h2>
           <p className="text-slate-600">
-            Brak danych do podglądu. Wróć do poprzednich kroków i wgraj plik
-            CSV.
+            Sprawdź przetworzone dane przed eksportem. Upewnij się, że wszystko
+            wygląda poprawnie.
+          </p>
+        </div>
+        <div className="flex flex-col items-center justify-center py-12 bg-slate-50 rounded-lg border border-slate-200">
+          <svg
+            className="h-16 w-16 text-slate-300 mb-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
+          <h3 className="text-lg font-medium text-slate-700 mb-2">
+            Brak danych do podglądu
+          </h3>
+          <p className="text-slate-500 text-center max-w-sm">
+            Wróć do poprzednich kroków, aby wgrać plik CSV i skonfigurować
+            mapowanie kolumn.
           </p>
         </div>
       </div>
@@ -59,12 +81,12 @@ export function Step4Preview({ onComplete, records, schema }: Step4Props) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-slate-800 mb-2">
+        <h2 className="text-2xl font-semibold text-slate-800 mb-2">
           Podgląd i podsumowanie
         </h2>
         <p className="text-slate-600">
-          Sprawdź jak będą wyglądać Twoje dane po przetworzeniu. Poniżej widzisz
-          próbkę pierwszych rekordów.
+          Sprawdź przetworzone dane przed eksportem. Upewnij się, że wszystko
+          wygląda poprawnie.
         </p>
       </div>
 
@@ -110,8 +132,9 @@ export function Step4Preview({ onComplete, records, schema }: Step4Props) {
               {previewRows.map((row, rowIndex) => (
                 <tr key={rowIndex} className="hover:bg-slate-50">
                   {schema.map((field) => {
-                    const value =
-                      row[field.name as keyof StandardRecord] as string;
+                    const value = row[
+                      field.name as keyof StandardRecord
+                    ] as string;
                     const isCategory = field.name === "item_category";
                     const isStatus = field.name === "status";
 

@@ -6,11 +6,6 @@ export interface ParsedCSVData {
   totalRows: number;
 }
 
-export interface WizardData {
-  csvData: ParsedCSVData | null;
-  fileName: string | null;
-}
-
 // Canonical schema field type
 export interface CanonicalField {
   name: string;

@@ -5,6 +5,8 @@ import { formatFieldDescription } from "../../utils/mapping";
 interface Step2Props {
   onComplete: (completed: boolean) => void;
   schema: CanonicalField[];
+  schemaLoading: boolean;
+  schemaError: string | null;
   csvHeaders: string[];
   mapping: Mapping;
   onChangeMapping: (mapping: Mapping) => void;
@@ -14,6 +16,8 @@ interface Step2Props {
 export function Step2ColumnMapping({
   onComplete,
   schema,
+  schemaLoading,
+  schemaError,
   csvHeaders,
   mapping,
   onChangeMapping,
@@ -39,15 +43,97 @@ export function Step2ColumnMapping({
     onChangeMapping(updatedMapping);
   };
 
-  // If no schema or headers yet, show placeholder
+  // Show loading state with spinner
+  if (schemaLoading) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold text-slate-800 mb-2">
+            Mapowanie kolumn
+          </h2>
+          <p className="text-slate-600">
+            Przypisz kolumny z Twojego pliku do pól standardowego schematu
+            danych.
+          </p>
+        </div>
+        <div className="flex items-center justify-center py-12">
+          <div className="flex flex-col items-center gap-3">
+            <svg
+              className="animate-spin h-8 w-8 text-emerald-500"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+            <span className="text-slate-600">Ładowanie schematu danych...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state if schema failed to load
+  if (schemaError) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold text-slate-800 mb-2">
+            Mapowanie kolumn
+          </h2>
+          <p className="text-slate-600">
+            Przypisz kolumny z Twojego pliku do pól standardowego schematu
+            danych.
+          </p>
+        </div>
+        <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-lg p-4">
+          <svg
+            className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <div className="text-sm text-red-800">
+            <strong>Błąd:</strong> {schemaError}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // If no schema loaded (shouldn't happen if loading finished without error)
   if (schema.length === 0) {
     return (
       <div className="space-y-6">
         <div>
-          <h2 className="text-xl font-semibold text-slate-800 mb-2">
-            Mapowanie kolumn do schematu danych
+          <h2 className="text-2xl font-semibold text-slate-800 mb-2">
+            Mapowanie kolumn
           </h2>
-          <p className="text-slate-600">Ładowanie schematu danych...</p>
+          <p className="text-slate-600">
+            Przypisz kolumny z Twojego pliku do pól standardowego schematu
+            danych.
+          </p>
+        </div>
+        <div className="text-slate-500 text-center py-8">
+          Schemat danych nie jest dostępny.
         </div>
       </div>
     );
@@ -57,12 +143,31 @@ export function Step2ColumnMapping({
     return (
       <div className="space-y-6">
         <div>
-          <h2 className="text-xl font-semibold text-slate-800 mb-2">
-            Mapowanie kolumn do schematu danych
+          <h2 className="text-2xl font-semibold text-slate-800 mb-2">
+            Mapowanie kolumn
           </h2>
           <p className="text-slate-600">
-            Najpierw wgraj plik CSV w poprzednim kroku.
+            Przypisz kolumny z Twojego pliku do pól standardowego schematu
+            danych.
           </p>
+        </div>
+        <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <svg
+            className="h-5 w-5 text-amber-500 mt-0.5 flex-shrink-0"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <div className="text-sm text-amber-800">
+            Najpierw wgraj plik CSV w poprzednim kroku.
+          </div>
         </div>
       </div>
     );
@@ -72,12 +177,12 @@ export function Step2ColumnMapping({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-semibold text-slate-800 mb-2">
-          Mapowanie kolumn do schematu danych
+        <h2 className="text-2xl font-semibold text-slate-800 mb-2">
+          Mapowanie kolumn
         </h2>
         <p className="text-slate-600">
-          Dopasuj pola wymaganego schematu do kolumn w Twoim pliku z rejestrem.
-          Dzięki temu wszystkie urzędy będą publikować dane w takim samym
+          Przypisz kolumny z Twojego pliku do pól standardowego schematu danych.
+          Dzięki temu wszystkie urzędy będą publikować dane w jednolitym
           formacie.
         </p>
       </div>
@@ -100,8 +205,8 @@ export function Step2ColumnMapping({
           </svg>
           <div className="text-sm text-emerald-800">
             <strong>Rozpoznaliśmy standardowy szablon danych.</strong> Wszystkie
-            wymagane pola zostały dopasowane automatycznie. Możesz przejść
-            dalej lub w razie potrzeby zmienić przypisania.
+            wymagane pola zostały dopasowane automatycznie. Możesz przejść dalej
+            lub w razie potrzeby zmienić przypisania.
           </div>
         </div>
       )}
@@ -170,9 +275,7 @@ export function Step2ColumnMapping({
               <div
                 key={field.name}
                 className={`grid grid-cols-2 gap-4 p-4 items-center ${
-                  field.required && !mapping[field.name]
-                    ? "bg-amber-50"
-                    : ""
+                  field.required && !mapping[field.name] ? "bg-amber-50" : ""
                 }`}
               >
                 <div className="flex flex-col gap-1">
@@ -212,8 +315,8 @@ export function Step2ColumnMapping({
       <div className="text-sm text-slate-500">
         <strong className="text-slate-600">Wskazówka:</strong> Pola oznaczone
         gwiazdką (*) są wymagane. Jeśli pole nie pasuje do żadnej kolumny,
-        pozostaw "(brak)" - ale pamiętaj, że pola wymagane muszą mieć
-        przypisaną kolumnę.
+        pozostaw "(brak)" - ale pamiętaj, że pola wymagane muszą mieć przypisaną
+        kolumnę.
       </div>
     </div>
   );
